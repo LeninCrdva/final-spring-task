@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/layout :: head}"></head>
+<body>
+<header th:replace="~{layout/layout :: header}"></header>
+
+<div class="container my-3">
+    <div class="card mx-auto" style="max-width: 25rem;">
+        <div class="card-body">
+            <h4 class="card-title text-center" th:text="${title}"></h4>
+            <form th:action="@{/user/save-user}" th:object="${user}" enctype="multipart/form-data" method="POST">
+
+                <div class="mb-3">
+                    <label for="name" class="form-label">Cédula del usuario</label>
+                    <input pattern="\d{10}" th:field="*{idCard}" id="card" class="form-control" placeholder="Ingrese la cédula del usuario" required title="El numero de cedula debe teer 10 dígitos numéricos">
+                </div>
+
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nombre del Usuario</label>
+                    <input th:field="*{name}" id="name" class="form-control" placeholder="Ingrese el nombre del usuario" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="lastname" class="form-label">Apellido del Usuario</label>
+                    <input th:field="*{lastName}" id="lastname" class="form-control" placeholder="Ingrese el apellido del usuario" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email del usuario:</label>
+                    <input type="email" th:field="*{email}" id="email" class="form-control" placeholder="Ingrese el email del usuario" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Número de telefono</label>
+                    <input pattern="\d{10}" th:field="*{phone}" id="phone" class="form-control" placeholder="Ingrese el teléfono de la empresa" required title="El teléfono debe tener 10 dígitos numéricos.">
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña:</label>
+                    <input type="password" th:field="*{password}" id="password" class="form-control" placeholder="Ingrese la contraseña del usuario" required>
+                </div>
+
+                <div class="mb-2 form-row">
+                    <label for="city" class="col-form-label">Ubicacion</label>
+                    <div class="col">
+                        <select th:field="*{codeCity.codeCity}" id="city"
+                                class="form-select form-control-sm" required>
+                            <option th:value="${null}" selected>Selecciona una ciudad</option>
+                            <option th:each="city: ${cities}" th:value="${city.codeCity}"
+                                    th:text="${city.name}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{layout/layout :: footer}"></footer>
+
+</body>
+</html>

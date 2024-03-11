@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/layout :: head}"></head>
+<body>
+<header th:replace="~{layout/layout :: header}"></header>
+
+<div class="container">
+    <h3 th:text="${title}"></h3>
+
+    <div class="container rounded-4">
+        <a th:href="@{/ticket/save-ticket}" class="text-decoration-none"><button class="btn btn btn-outline-secondary"><span class="fa fa-plus"></span><span> Crear ticket</span></button></a>
+    </div>
+
+    <table class="table table-hover table-sm text-center">
+        <thead>
+            <tr>
+                <th scope="col">ID Ticket</th>
+                <th scope="col">Create At</th>
+                <th scope="col">State</th>
+                <th scope="col">Title</th>
+                <th scope="col">Department</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            <tr th:each="ticket: ${tickets}">
+                <th scope="col" th:text="${ticket.codeTicket}"></th>
+                <td th:text="${ticket.createAt}"></td>
+                <td th:if="${ticket.state}" th:text="'Abierto'"></td>
+                <td th:unless="${ticket.state}" th:text="'Cerrado'"></td>
+                <td th:text="${ticket.title}"></td>
+                <td th:text="${ticket.codeDepartment.name}"></td>
+                <td>
+                    <a th:href="@{/ticket/ver-ticket/} + ${ticket.codeTicket}" class="fas fa-eye ms-3"></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer th:replace="~{layout/layout :: footer}"></footer>
+</body>
+</html>

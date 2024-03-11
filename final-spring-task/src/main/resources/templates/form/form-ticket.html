@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/layout :: head}"></head>
+<body>
+<header th:replace="~{layout/layout :: header}"></header>
+
+<div class="container mt-3">
+    <div class="card mx-auto" style="max-width: 50rem;">
+        <div class="card-body">
+            <h3 th:text="${title}"></h3>
+            <form th:action="@{/ticket/save-ticket}" th:object="${ticket}" enctype="multipart/form-data" method="POST">
+                <div class="mb-3 form-row text-success">
+                    <hr>
+                </div>
+
+                <div class="mb-2 form-row">
+                    <div class="row">
+                        <div class="col">
+                            <p><b class="mx-auto">Email:</b></p>
+                            <p><b class="mx-auto">Cliente:</b></p>
+                            <p><b class="mx-auto">Cédula:</b></p>
+                        </div>
+                        <div class="col">
+                            <p class="me-auto" th:text="${user.email}"></p>
+                            <p class="me-auto" th:text="${user.name} + ' ' + ${user.lastName}"></p>
+                            <p class="me-auto" th:text="${user.idCard}"></p>
+                            <input type="hidden" th:field="*{userIdCard.idCard}" th:value="${user.idCard}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3 form-row text-success">
+                    <hr>
+                </div>
+
+                <div class="mb-2 form-row">
+                    <label for="topic" class="form-label">Help's topic</label>
+                    <div class="col">
+                        <select th:field="*{ticketCase.codeCase}" id="topic" class="form-select form-control-sm"
+                                aria-label=""
+                                required>
+                            <option th:value="${null}" selected>Select an option</option>
+                            <option th:each="ticketCase: ${ticketCases}" th:value="${ticketCase.codeCase}"
+                                    th:text="${ticketCase.name}">Asd
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3 form-row text-success">
+                    <hr>
+                </div>
+
+                <div class="mb-2 form-row">
+                    <label for="title" class="col-sm-2 col-form-label">Details</label>
+                    <div class="col">
+                        <p class="form-text text-muted mb-1">Describe your problem</p>
+                        <input th:field="*{title}" id="title" class="form-control form-control-sm" required>
+                    </div>
+                </div>
+
+                <div class="mb-3 form-row text-success">
+                    <hr>
+                </div>
+
+                <div class="mb-2">
+                    <label for="file-picker" class="visually-hidden">Description</label>
+                    <textarea th:field="*{description}" id="file-picker" class="form-control form-control-sm"
+                              rows="4"></textarea>
+
+                    <img id="preview" width="250" class="img-thumbnail rounded d-block mb-3 mt-3">
+
+                    <input class="form-control" type="file" name="file" id="file" accept="image/*"
+                           onchange="previewImagen()">
+                </div>
+
+                <div class="mb-3 form-row text-success">
+                    <hr>
+                </div>
+
+                <div class="mb-2 form-row">
+                    <label for="department" class="col-sm-2 col-form-label">Department</label>
+                    <div class="col">
+                        <select th:field="*{codeDepartment.codeDepartment}" id="department"
+                                class="form-select form-control-sm"
+                                onchange="updateCompany()" required>
+                            <option th:value="${null}" selected>Select a department</option>
+                            <option th:each="department: ${departments}" th:value="${department.codeDepartment}"
+                                    th:text="${department.name}"
+                                    th:data-company="${department.codeCompany.name}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-2 form-row">
+                    <label for="company" class="col-sm-2 col-form-label">Company</label>
+                    <div class="col">
+                        <input id="company" class="form-control form-control-sm" type="text" readonly>
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <button class="btn btn-primary btn-sm">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    tinymce.init({
+        selector: 'textarea',
+    });
+
+    function previewImagen() {
+        var file = document.getElementById("file").files;
+        if (file.length > 0) {
+            var fileReader = new FileReader();
+
+            fileReader.onload = function (event) {
+                document.getElementById("preview").setAttribute("src", event.target.result)
+            }
+
+            fileReader.readAsDataURL(file[0]);
+        }
+    }
+
+    function updateCompany() {
+        var departmentSelect = document.getElementById('department');
+        var companyInput = document.getElementById('company');
+        var selectedOption = departmentSelect.options[departmentSelect.selectedIndex];
+
+        companyInput.value = selectedOption.getAttribute('data-company');
+    }
+</script>
+
+<footer th:replace="~{layout/layout :: footer}"></footer>
+
+</body>
+</html>

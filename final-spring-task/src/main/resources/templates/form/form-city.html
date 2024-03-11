@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/layout :: head}"></head>
+<body>
+<header th:replace="~{layout/layout :: header}"></header>
+
+<div class="container my-3">
+    <div class="card mx-auto" style="max-width: 25rem;">
+        <div class="card-body">
+            <h4 class="card-title text-center" th:text="${title}">Título del Formulario</h4>
+            <form th:action="@{/city/save-city}" th:object="${city}" enctype="multipart/form-data" method="POST">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Nombre de la Ciudad</label>
+                    <input th:field="*{name}" id="title" class="form-control" placeholder="Ingrese el nombre de la ciudad" required>
+                </div>
+                <input type="hidden" th:field="*{codeCity}">
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{layout/layout :: footer}"></footer>
+
+</body>
+</html>

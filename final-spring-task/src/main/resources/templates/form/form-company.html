@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/layout :: head}"></head>
+<body>
+<header th:replace="~{layout/layout :: header}"></header>
+
+<div class="container my-3">
+    <div class="card mx-auto" style="max-width: 25rem;">
+        <div class="card-body">
+            <h4 class="card-title text-center" th:text="${title}"></h4>
+            <form th:action="@{/company/save-company}" th:object="${company}" enctype="multipart/form-data" method="POST">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nombre de la empresa</label>
+                    <input th:field="*{name}" id="name" class="form-control" placeholder="Ingrese el nombre de la empresa" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Número de telefono</label>
+                    <input pattern="\d{10}" th:field="*{phone}" id="phone" class="form-control" placeholder="Ingrese el teléfono de la empresa" required title="El teléfono debe tener 10 dígitos numéricos.">
+                </div>
+
+                <div class="mb-2 form-row">
+                    <label for="city" class="col-form-label">Ubicacion</label>
+                    <div class="col">
+                        <select th:field="*{codeCity.codeCity}" id="city"
+                                class="form-select form-control-sm" required>
+                            <option th:value="${null}" selected>Selecciona una ciudad</option>
+                            <option th:each="city: ${cities}" th:value="${city.codeCity}"
+                                    th:text="${city.name}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <input type="hidden" th:field="*{codeCompany}">
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{layout/layout :: footer}"></footer>
+
+</body>
+</html>

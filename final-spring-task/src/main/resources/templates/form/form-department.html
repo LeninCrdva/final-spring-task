@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/layout :: head}"></head>
+<body>
+<header th:replace="~{layout/layout :: header}"></header>
+
+<div class="container my-3">
+    <div class="card mx-auto" style="max-width: 25rem;">
+        <div class="card-body">
+            <h4 class="card-title text-center" th:text="${title}">Título del Formulario</h4>
+            <form th:action="@{/department/save-department}" th:object="${department}" enctype="multipart/form-data" method="POST">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nombre del departamento</label>
+                    <input th:field="*{name}" id="name" class="form-control" placeholder="Ingrese el nombre del departamento" required>
+                </div>
+
+                <div class="mb-2 form-row">
+                    <label for="city" class="col-form-label">Empresa perteneciente</label>
+                    <div class="col">
+                        <select th:field="*{codeCompany.codeCompany}" id="city"
+                                class="form-select form-control-sm" required>
+                            <option th:value="${null}" selected>Selecciona la empresa</option>
+                            <option th:each="company: ${companies}" th:value="${company.codeCompany}"
+                                    th:text="${company.name}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <input type="hidden" th:field="*{codeDepartment}">
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{layout/layout :: footer}"></footer>
+
+</body>
+</html>

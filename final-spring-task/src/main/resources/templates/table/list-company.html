@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/layout :: head}"></head>
+<body>
+<header th:replace="~{layout/layout :: header}"></header>
+
+
+<div class="container">
+    <h3 th:text="${title}"></h3>
+
+    <div class="container rounded-4">
+        <a th:href="@{/company/save-company}" class="text-decoration-none"><button class="btn btn btn-outline-secondary"><span class="fa fa-plus"></span><span> Crear empresa</span></button></a>
+    </div>
+
+    <table class="table table-hover table-sm text-center">
+        <thead>
+        <tr>
+            <th scope="col">ID Company</th>
+            <th scope="col">Name Company</th>
+            <th scope="col">Phone Company</th>
+            <th scope="col">Location</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        <tr th:each="company: ${companies}">
+            <th scope="col" th:text="${company.codeCompany}"></th>
+            <td th:text="${company.name}"></td>
+            <td th:text="${company.phone}"></td>
+            <td th:text="${company.codeCity.name}"></td>
+            <td>
+                <a th:href="@{/company/save-company/} + ${company.codeCompany}" class="fas fa-pencil-alt mt-1"></a>
+                <a th:href="@{/company/eliminar-empresa/} + ${company.codeCompany}" class="fas fa-trash-alt mt-1 ms-3 text-danger"></a>
+                <a th:href="@{/company/ver-empresa/} + ${company.codeCompany}" class="fas fa-eye ms-3"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer th:replace="~{layout/layout :: footer}"></footer>
+
+</body>
+</html>

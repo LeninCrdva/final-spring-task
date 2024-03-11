@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/layout :: head}"></head>
+<body>
+<header th:replace="~{layout/layout :: header}"></header>
+
+<div class="container rounded-4">
+    <a th:href="@{/ticket/list-all-tickets}" class="text-decoration-none"><button class="btn btn btn-outline-secondary"><span class="fas fa-long-arrow-alt-left"></span><span> Volver</span></button></a>
+</div>
+
+<div class="container border border-dark-subtle rounded-4 mt-3">
+    <h5 th:text="${ticket.title} + ' #' + ${ticket.codeTicket}"></h5>
+    <div class="row align-items-start">
+        <div class="col">
+            <p class="fw-bold">Información básica del ticket</p>
+            <div>
+                <div class="row border-top bg-body-tertiary">
+                    <div class="col-3">
+                        <p>Estado del ticket:</p>
+                        <p>Departamento:</p>
+                        <p>Creado en:</p>
+
+                    </div>
+                    <div class="col">
+                        <p th:text="${ticket.state ? 'Abierto' : 'Cerrado'}"></p>
+                        <p th:text="${ticket.codeDepartment.name}"></p>
+                        <p th:text="${#dates.format(ticket.createAt, 'dd/MM/yyyy')}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <p class="fw-bold">Información del usuario</p>
+            <div>
+                <div class="row border-top bg-body-tertiary">
+                    <div class="col-3">
+                        <p>Nombre:</p>
+                        <p>Email:</p>
+                        <p>Telefono:</p>
+                    </div>
+                    <div class="col">
+                        <p th:text="${ticket.userIdCard.name} + ' ' + ${ticket.userIdCard.lastName}"></p>
+                        <p th:text="${ticket.userIdCard.email}"></p>
+                        <p th:text="${ticket.userIdCard.phone}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="fw-bold mt-2">Detalles del ticket</p>
+        <div class="col border-top">
+            <p class="fw-bold">Información básica del ticket</p>
+            <div>
+                <div class="row bg-body-tertiary mb-1">
+                    <div class="col-3">
+                        <p>Departamento:</p>
+                    </div>
+                    <div class="col">
+                        <p th:text="${ticket.codeDepartment.name}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4 ps-2 d-flex align-items-center">
+                <img th:src="${!file.fileName.isEmpty() ? '/uploads/' + file.fileName : '/images/img.png'}"
+                     class="img-fluid rounded-start" th:alt="${file.fileName ?: 'Imagen no disponible'}">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <span th:text="${ticket.userIdCard.name} + ' ' + ${ticket.userIdCard.lastName}"></span>
+                        <span class="fs-6" th:text="'publicado el ' + ${#dates.format(ticket.createAt, 'dd/MM/yyyy')}"></span>
+                    </h5>
+                    <textarea th:text="${ticket.description}" class="form-control form-control-sm card-text" rows="4"
+                              readonly></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        content_style: `
+  body { font-family:Helvetica,Arial,sans-serif; font-size:16px }
+  .editable { border: 0.1rem solid green; border-radius: 0.8rem; padding: 0.2rem; }
+  `,
+        editable_root: false,
+        editable_class: 'editable',
+    });
+</script>
+<footer th:replace="~{layout/layout :: footer}"></footer>
+</body>
+</html>

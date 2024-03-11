@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/layout :: head}"></head>
+<body>
+<header th:replace="~{layout/layout :: header}"></header>
+
+<div class="container my-3">
+    <div class="card mx-auto" style="max-width: 25rem;">
+        <div class="card-body">
+            <h4 class="card-title text-center" th:text="${title}">Inicio de Sesión</h4>
+            <form th:action="@{/user/login}" th:object="${userDto}" method="POST">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Cédula</label>
+                    <input th:field="*{idcard}" id="username" class="form-control" placeholder="Ingrese su cedula" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" th:field="*{password}" id="password" class="form-control" placeholder="Ingrese su contraseña" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{layout/layout :: footer}"></footer>
+
+</body>
+</html>

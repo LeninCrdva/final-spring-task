@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/layout :: head}"></head>
+<body>
+<header th:replace="~{layout/layout :: header}"></header>
+
+
+<div class="container">
+    <h3 th:text="${title}"></h3>
+
+    <div class="container rounded-4">
+        <a th:href="@{/city/save-city}" class="text-decoration-none"><button class="btn btn btn-outline-secondary"><span class="fa fa-plus"></span><span> Crear ciudad</span></button></a>
+    </div>
+
+    <table class="table table-hover table-sm text-center">
+        <thead>
+        <tr>
+            <th scope="col">ID City</th>
+            <th scope="col">Name City</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        <tr th:each="city: ${cities}">
+            <th scope="col" th:text="${city.codeCity}"></th>
+            <td th:text="${city.name}"></td>
+            <td>
+                <a th:href="@{/city/save-city/} + ${city.codeCity}" class="fas fa-pencil-alt mt-1"></a>
+                <a th:href="@{/city/eliminar-ciudad/} + ${city.codeCity}" class="fas fa-trash-alt mt-1 ms-3 text-danger"></a>
+                <a th:href="@{/city/ver-ciudad/} + ${city.CodeCity}" class="fas fa-eye ms-3"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer th:replace="~{layout/layout :: footer}"></footer>
+
+</body>
+</html>
